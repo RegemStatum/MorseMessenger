@@ -5,7 +5,7 @@ const Logo: FC = () => {
   return (
     <div className="w-[85px]">
       <Image
-        src="/images/layout/Logo.svg"
+        src="/images/layout/logo.svg"
         alt="morse-logo"
         width={112}
         height={39}
