@@ -2,6 +2,7 @@ import "./globals.css";
 import type { Metadata } from "next";
 import { Inter, Roboto_Flex } from "next/font/google";
 import { FC } from "react";
+import Layout from "./_components/layout";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -26,7 +27,7 @@ const RootLayout: FC<Props> = ({ children }) => {
   return (
     <html lang="en">
       <body className={`${inter.variable} ${roboto_flex.variable} font-inter`}>
-        {children}
+        <Layout>{children}</Layout>
       </body>
     </html>
   );
