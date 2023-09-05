@@ -26,7 +26,9 @@ type Props = { children: React.ReactNode };
 const RootLayout: FC<Props> = ({ children }) => {
   return (
     <html lang="en">
-      <body className={`${inter.variable} ${roboto_flex.variable} font-inter`}>
+      <body
+        className={`${inter.variable} ${roboto_flex.variable} font-inter flex flex-col min-h-screen`}
+      >
         <Layout>{children}</Layout>
       </body>
     </html>

@@ -10,7 +10,7 @@ const Layout: FC<Props> = ({ children }) => {
   return (
     <>
       <Header />
-      <main className="container">{children}</main>
+      <main className="container grow">{children}</main>
       <Footer />
     </>
   );
