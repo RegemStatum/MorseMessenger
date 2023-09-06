@@ -10,7 +10,7 @@ const Layout: FC<Props> = ({ children }) => {
   return (
     <>
       <Header />
-      <main className="container grow">{children}</main>
+      <main className="relative flex container grow">{children}</main>
       <Footer />
     </>
   );

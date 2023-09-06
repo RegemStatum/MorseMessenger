@@ -6,7 +6,7 @@ type Props = {
 
 const IconWrapper: FC<Props> = ({ children }) => {
   return (
-    <div className="bg-neutral-200 p-[1px] rounded-lg cursor-pointer">
+    <div className="bg-neutral-200 p-[1px] rounded-xl cursor-pointer">
       {children}
     </div>
   );

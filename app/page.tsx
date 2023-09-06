@@ -1,10 +1,9 @@
-const Home = () => {
+const HomePage = () => {
   return (
     <div>
-      <h1 className="font-roboto">Header 11</h1>
-      <p>Hello </p>
+      <h1>Main page</h1>
     </div>
   );
 };
 
-export default Home;
+export default HomePage;

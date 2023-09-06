@@ -1,5 +1,6 @@
 import { FC } from "react";
 import Image from "next/image";
+import Link from "next/link";
 
 type Props = {
   children: string;
@@ -9,13 +10,12 @@ type Props = {
 const PrimaryLink: FC<Props> = ({ children, href }) => {
   return (
     <div className="flex hover:underline group">
-      <a
+      <Link
         href={href}
-        target="_blank"
         className="font-semibold text-gray-900 group-hover:text-blue-600"
       >
         {children}
-      </a>
+      </Link>
       <div className="w-[16px] pt-[2px]">
         <Image
           src="/images/icons/linkArrowIcon.svg"

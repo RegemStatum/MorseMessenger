@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { Inter, Roboto_Flex } from "next/font/google";
 import { FC } from "react";
 import Layout from "./_components/layout";
+import { AuthContextProvider } from "./_context";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -29,7 +30,9 @@ const RootLayout: FC<Props> = ({ children }) => {
       <body
         className={`${inter.variable} ${roboto_flex.variable} font-inter flex flex-col min-h-screen`}
       >
-        <Layout>{children}</Layout>
+        <AuthContextProvider>
+          <Layout>{children}</Layout>
+        </AuthContextProvider>
       </body>
     </html>
   );

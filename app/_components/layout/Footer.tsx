@@ -1,8 +1,7 @@
 import { FC } from "react";
 import Logo from "./Logo";
-import Image from "next/image";
-import { PrimaryLink } from "../links";
-import { DotSeparator } from "../separators";
+import { PrimaryExternalLink } from "../ui/links";
+import { DotSeparator } from "../ui/separators";
 
 const Footer: FC = () => {
   return (
@@ -13,7 +12,9 @@ const Footer: FC = () => {
         <DotSeparator />
         <div className="flex gap-[2px]">
           <p>by</p>
-          <PrimaryLink href="https://github.com/RegemStatum">alkon</PrimaryLink>
+          <PrimaryExternalLink href="https://github.com/RegemStatum">
+            alkon
+          </PrimaryExternalLink>
         </div>
         <DotSeparator />
         <div className="flex gap-[2px]">

@@ -1,7 +1,8 @@
 import { FC } from "react";
 import Logo from "./Logo";
 import Image from "next/image";
-import IconWrapper from "../icons/IconWrapper";
+import IconWrapper from "../ui/icons/IconWrapper";
+import Link from "next/link";
 
 const headerIconsSize = 32;
 
@@ -13,14 +14,16 @@ const Header: FC = () => {
         {/* control */}
         <div className="flex gap-1">
           {/* user */}
-          <IconWrapper>
-            <Image
-              src="/images/icons/userIcon.svg"
-              alt="menu"
-              width={headerIconsSize}
-              height={headerIconsSize}
-            />
-          </IconWrapper>
+          <Link href="/auth/signup">
+            <IconWrapper>
+              <Image
+                src="/images/icons/userIcon.svg"
+                alt="menu"
+                width={headerIconsSize}
+                height={headerIconsSize}
+              />
+            </IconWrapper>
+          </Link>
           {/* search */}
           <IconWrapper>
             <Image
