@@ -1,6 +1,8 @@
 import { User } from "firebase/auth";
 
-export type AuthContextValue = {
+type AuthContextValue = {
   user: User | null;
   isUserLoading: boolean;
 };
+
+export type { AuthContextValue };

@@ -1,3 +1,4 @@
+"use client";
 import { FC } from "react";
 import { PrimaryLink } from "../ui/links";
 import AuthForm from "./AuthForm";
@@ -6,7 +7,7 @@ type Props = {
   action: "signin" | "signup";
 };
 
-const AuthModal: FC<Props> = ({ action }) => {
+const AuthFormContainer: FC<Props> = ({ action }) => {
   const formActionText = action === "signup" ? "Sign up" : "Sign in";
   const authLinkText =
     action === "signup"
@@ -24,7 +25,7 @@ const AuthModal: FC<Props> = ({ action }) => {
           Please, {formActionText.toLowerCase()} to start using Morse messenger
         </p>
       </div>
-      <AuthForm formActionText={formActionText} />
+      <AuthForm action={action} formActionText={formActionText} />
       <div className="mt-3 ml-1 text-sm">
         <PrimaryLink href={authLinkHref}>{authLinkText}</PrimaryLink>
       </div>
@@ -32,4 +33,4 @@ const AuthModal: FC<Props> = ({ action }) => {
   );
 };
 
-export default AuthModal;
+export default AuthFormContainer;

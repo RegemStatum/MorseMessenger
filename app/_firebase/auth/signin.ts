@@ -9,7 +9,7 @@ const signIn = async (email: string, password: string) => {
 
   try {
     result = await signInWithEmailAndPassword(auth, email, password);
-  } catch (e: unknown) {
+  } catch (e: any) {
     error = e;
   }
 
