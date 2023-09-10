@@ -1,3 +1,5 @@
 import PrimaryButton from "./PrimaryButton";
+import SecondaryButton from "./SecondaryButton";
+import TertiaryButton from "./TertiaryButton";
 
-export { PrimaryButton };
+export { PrimaryButton, SecondaryButton, TertiaryButton };

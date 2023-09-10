@@ -33,7 +33,7 @@ const Input: FC<Props> = ({
           name={name}
           className={`w-full p-2 ${
             functionalIconSrc ? "pr-10 " : ""
-          }bg-gray-50 border-2 border-gray-50 rounded-md text-sm text-gray-900 focus:outline-none focus:border-blue-500 lg:text-base`}
+          }bg-gray-100 border-2 border-gray-100 rounded-md text-sm text-gray-900 focus:outline-none focus:border-blue-500 lg:text-base`}
           {...rest}
         />
         {functionalIconSrc && (

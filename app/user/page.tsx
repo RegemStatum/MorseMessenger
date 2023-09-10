@@ -1,14 +1,8 @@
 "use client";
-import { useAuthContext } from "../_context/AuthContext";
+import User from "../_components/user/User";
 
 const UserPage = () => {
-  const { user } = useAuthContext();
-
-  return (
-    <div>
-      <p>{user?.displayName || user?.email}</p>
-    </div>
-  );
+  return <User />;
 };
 
 export default UserPage;

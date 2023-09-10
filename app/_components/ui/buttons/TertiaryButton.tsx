@@ -4,15 +4,15 @@ interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
   children: React.ReactNode;
 }
 
-const PrimaryButton: FC<Props> = ({ children, ...rest }) => {
+const TertiaryButton: FC<Props> = ({ children, ...rest }) => {
   return (
     <button
       {...rest}
-      className="block w-full p-2 font-medium bg-gray-900 text-gray-50 rounded-md border disabled:bg-gray-200 disabled:border-gray-200"
+      className="block font-medium selection:leading-8 text-gray-900 hover:underline"
     >
       {children}
     </button>
   );
 };
 
-export default PrimaryButton;
+export default TertiaryButton;
