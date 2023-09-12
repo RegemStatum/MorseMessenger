@@ -1,9 +1,9 @@
 import { FC, useState } from "react";
-import Input from "../ui/forms/Input";
-import { PrimaryButton } from "../ui/buttons";
-import Spinner from "../ui/loaders/Spinner";
+import Input from "../../ui/forms/Input";
+import { PrimaryButton } from "../../ui/buttons";
 import { useAppContext } from "@/app/_context/AppContext";
 import updateUserDisplayName from "@/app/_firebase/user/updateUserDisplayName";
+import LoadingButton from "../../ui/buttons/LoadingButton";
 
 type Props = {};
 
@@ -45,7 +45,7 @@ const UserCreateNicknameForm: FC<Props> = ({}) => {
           disabled={isLoading}
         />
       </div>
-      <div className="w-[79px]">
+      {/* <div className="w-[79px]">
         <PrimaryButton onClick={handleFormSubmit}>
           {isLoading ? (
             <div className="w-[22px] h-[22px] mx-auto">
@@ -55,6 +55,13 @@ const UserCreateNicknameForm: FC<Props> = ({}) => {
             "Confirm"
           )}
         </PrimaryButton>
+      </div> */}
+      <div className="w-[79px]">
+        {isLoading ? (
+          <LoadingButton />
+        ) : (
+          <PrimaryButton onClick={handleFormSubmit}>Confirm</PrimaryButton>
+        )}
       </div>
     </form>
   );

@@ -28,7 +28,7 @@ const InfoPopup: FC = () => {
     <div
       className={`${
         isShown ? "translate-x-0" : "translate-x-[120%]"
-      } transform m-1 p-3 rounded-md ${bgColor} ${textColor} transition-transform duration-2000 ease-in-out shadow-sm lg:p-4 lg:text-lg`}
+      } max-w-[300px] overflow-x-scroll transform m-1 p-3 rounded-md ${bgColor} ${textColor} transition-transform duration-2000 ease-in-out shadow-sm lg:p-4 lg:text-lg`}
     >
       <p>{message}</p>
     </div>
