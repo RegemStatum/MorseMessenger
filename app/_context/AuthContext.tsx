@@ -8,6 +8,7 @@ import { useRouter } from "next/navigation";
 const defaultAuthContextValue: AuthContextValue = {
   user: null,
   isUserLoading: false,
+  updateLocalUser: () => {},
 };
 
 const AuthContext = createContext(defaultAuthContextValue);
@@ -20,7 +21,7 @@ const auth = getAuth(firebase_app);
 
 const AuthContextProvider: FC<Props> = ({ children }) => {
   const router = useRouter();
-  const [user, setUser] = useState<User | null>(defaultAuthContextValue.user);
+  const [user, setUser] = useState<User | null>(null);
   const [isUserLoading, setIsUserLoading] = useState(
     defaultAuthContextValue.isUserLoading
   );
@@ -36,6 +37,15 @@ const AuthContextProvider: FC<Props> = ({ children }) => {
 
   const removeLocalStorageUser = () => {
     localStorage.removeItem("user");
+  };
+
+  const updateLocalUser = () => {
+    const auth = getAuth();
+    const currentUser = auth.currentUser;
+    console.log("Current user photo url: ", currentUser?.photoURL);
+    if (!currentUser) throw new Error("No current user");
+    setUser({ ...currentUser });
+    setLocalStorageUser({ ...currentUser });
   };
 
   // listen for user changes
@@ -62,7 +72,7 @@ const AuthContextProvider: FC<Props> = ({ children }) => {
   }, [router, user, isUserLoading]);
 
   return (
-    <AuthContext.Provider value={{ user, isUserLoading }}>
+    <AuthContext.Provider value={{ user, isUserLoading, updateLocalUser }}>
       {children}
     </AuthContext.Provider>
   );

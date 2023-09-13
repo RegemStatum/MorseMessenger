@@ -2,8 +2,8 @@ import { FC, useState } from "react";
 import Input from "../../ui/forms/Input";
 import { PrimaryButton } from "../../ui/buttons";
 import { useAppContext } from "@/app/_context/AppContext";
-import updateUserDisplayName from "@/app/_firebase/user/updateUserDisplayName";
 import LoadingButton from "../../ui/buttons/LoadingButton";
+import { getAuth, updateProfile } from "firebase/auth";
 
 type Props = {};
 
@@ -17,11 +17,22 @@ const UserCreateNicknameForm: FC<Props> = ({}) => {
     setNickname(newNickname);
   };
 
+  const updateUserDisplayName = async (newDisplayName: string) => {
+    const auth = getAuth();
+    const currentUser = auth.currentUser;
+    if (!currentUser) throw new Error("No current user");
+    await updateProfile(currentUser, {
+      displayName: newDisplayName,
+    });
+  };
+
   const handleFormSubmit = async (e: React.SyntheticEvent) => {
     try {
       e.preventDefault();
       setIsLoading(true);
+
       await updateUserDisplayName(nickname);
+
       showInfoPopup("Nickname created", "info");
       setIsLoading(false);
     } catch (error: any) {
@@ -45,17 +56,6 @@ const UserCreateNicknameForm: FC<Props> = ({}) => {
           disabled={isLoading}
         />
       </div>
-      {/* <div className="w-[79px]">
-        <PrimaryButton onClick={handleFormSubmit}>
-          {isLoading ? (
-            <div className="w-[22px] h-[22px] mx-auto">
-              <Spinner />
-            </div>
-          ) : (
-            "Confirm"
-          )}
-        </PrimaryButton>
-      </div> */}
       <div className="w-[79px]">
         {isLoading ? (
           <LoadingButton />

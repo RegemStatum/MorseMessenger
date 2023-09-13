@@ -14,15 +14,26 @@ const Header: FC = () => {
   const UserAuthenticatedIcon: FC = () => {
     return (
       <Link href="/user">
-        <div className="bg-blue-300 p-[1px] rounded-xl cursor-pointer">
+        <div className="p-[1px] rounded-xl overflow-hidden cursor-pointer">
           <div
             style={{ width: headerIconsSize, height: headerIconsSize }}
-            className="flex justify-center items-center"
+            className="relative flex justify-center items-center"
           >
-            <p className="font-bold text-blue-600">
-              {user?.displayName?.substring(0, 2) ||
-                user?.email?.substring(0, 2)}
-            </p>
+            {user?.photoURL ? (
+              <Image
+                src={user?.photoURL}
+                alt="user photo"
+                fill
+                className="object-cover"
+              />
+            ) : (
+              <div className="bg-blue-300 ">
+                <p className="font-bold text-blue-600">
+                  {user?.displayName?.substring(0, 2) ||
+                    user?.email?.substring(0, 2)}
+                </p>
+              </div>
+            )}
           </div>
         </div>
       </Link>
