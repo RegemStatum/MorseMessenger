@@ -1,14 +1,17 @@
-import { FC } from "react";
+import { ButtonHTMLAttributes, FC } from "react";
 
-type Props = {
+interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
   children: React.ReactNode;
-};
+}
 
-const IconWrapper: FC<Props> = ({ children }) => {
+const IconWrapper: FC<Props> = ({ children, ...rest }) => {
   return (
-    <div className="hover:bg-neutral-200 p-[1px] rounded-xl cursor-pointer">
+    <button
+      {...rest}
+      className="hover:bg-neutral-200 p-[1px] rounded-xl cursor-pointer"
+    >
       {children}
-    </div>
+    </button>
   );
 };
 

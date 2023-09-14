@@ -1,9 +1,21 @@
 "use client";
-import { FC, useContext, createContext } from "react";
+import { FC, useContext, createContext, useState } from "react";
 
-type UserContextValue = {};
+type UserContextValue = {
+  chosenImageId: number;
+  isUploadImageModalOpen: boolean;
+  setChosenImage: (id: number) => void;
+  openUploadImageModal: () => void;
+  closeUploadImageModal: () => void;
+};
 
-const defaultUserContextValue: UserContextValue = {};
+const defaultUserContextValue: UserContextValue = {
+  chosenImageId: 1,
+  isUploadImageModalOpen: false,
+  setChosenImage: (id) => {},
+  openUploadImageModal: () => {},
+  closeUploadImageModal: () => {},
+};
 
 const UserContext = createContext(defaultUserContextValue);
 
@@ -12,11 +24,38 @@ type Props = {
 };
 
 const UserContextProvider: FC<Props> = ({ children }) => {
-  const changePassword = () => {
-    
-  }
+  const [chosenImageId, setChosenImageId] = useState(
+    defaultUserContextValue.chosenImageId
+  );
+  const [isUploadImageModalOpen, setIsUploadImageModalOpen] = useState(
+    defaultUserContextValue.isUploadImageModalOpen
+  );
 
-  return <UserContext.Provider value={{}}>{children}</UserContext.Provider>;
+  const setChosenImage = (id: number) => {
+    setChosenImageId(id);
+  };
+
+  const openUploadImageModal = () => {
+    setIsUploadImageModalOpen(true);
+  };
+
+  const closeUploadImageModal = () => {
+    setIsUploadImageModalOpen(false);
+  };
+
+  return (
+    <UserContext.Provider
+      value={{
+        chosenImageId,
+        isUploadImageModalOpen,
+        setChosenImage,
+        openUploadImageModal,
+        closeUploadImageModal,
+      }}
+    >
+      {children}
+    </UserContext.Provider>
+  );
 };
 
 export const useUserContext = () => useContext(UserContext);

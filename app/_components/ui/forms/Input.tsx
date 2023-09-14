@@ -29,12 +29,12 @@ const Input: FC<Props> = ({
     <div>
       <div className="relative">
         <input
+          {...rest}
           id={name}
           name={name}
-          className={`w-full p-2 ${
+          className={`w-full ${rest.type === "file" ? "" : "p-2"} ${
             functionalIconSrc ? "pr-10 " : ""
           }bg-gray-100 border-2 border-gray-100 rounded-md text-sm text-gray-900 focus:outline-none focus:border-blue-500 lg:text-base`}
-          {...rest}
         />
         {functionalIconSrc && (
           <Image

@@ -25,6 +25,8 @@ const Header: FC = () => {
                 alt="user photo"
                 fill
                 className="object-cover"
+                quality={100}
+                sizes="10vw"
               />
             ) : (
               <div className="bg-blue-300 ">
@@ -62,7 +64,7 @@ const Header: FC = () => {
         {/* control */}
         <div className="flex gap-1">
           {/* user */}
-          {user ? <UserAuthenticatedIcon /> : <UserUnauthenticatedIcon />}
+          {/* {user ? <UserAuthenticatedIcon /> : <UserUnauthenticatedIcon />} */}
           {/* search */}
           <IconWrapper>
             <Image

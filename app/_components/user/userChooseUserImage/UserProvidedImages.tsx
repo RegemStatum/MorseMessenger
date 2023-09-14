@@ -2,26 +2,13 @@ import { FC } from "react";
 import { USER_DEFAULT_IMAGES } from "@/app/_lib/constants/constants";
 import UserProvidedImage from "./UserProvidedImage";
 
-type Props = {
-  chosenImageId: number;
-  setNewChosenImage: (id: number) => void;
-};
-
-const UserProvidedImages: FC<Props> = ({
-  chosenImageId,
-  setNewChosenImage,
-}) => {
+const UserProvidedImages = ({}) => {
   return (
-    <div className="flex gap-1 flex-wrap">
+    <>
       {USER_DEFAULT_IMAGES.map((image) => (
-        <UserProvidedImage
-          key={image.id}
-          {...image}
-          chosenImageId={chosenImageId}
-          setNewChosenImage={setNewChosenImage}
-        />
+        <UserProvidedImage key={image.id} {...image} />
       ))}
-    </div>
+    </>
   );
 };
 

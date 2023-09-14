@@ -29,7 +29,7 @@ const UserSectionContainer: FC<Props> = ({
         <div className="pt-1 pb-2  flex items-center justify-between">
           {headerText && <h4 className="pl-1">{headerText}</h4>}
           {isClosable && (
-            <div className="shrink" onClick={closeSection}>
+            <div className="flex shrink" onClick={closeSection}>
               <IconWrapper>
                 <Image
                   src="/images/icons/xMarkIcon.svg"

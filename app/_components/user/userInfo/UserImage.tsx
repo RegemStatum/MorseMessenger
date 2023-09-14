@@ -13,7 +13,7 @@ const UserImage: FC = () => {
           alt="user photo"
           fill
           className="object-cover"
-          quality={100}
+          sizes="10vw"
         />
       ) : (
         <p className="text-lg font-bold text-blue-600">

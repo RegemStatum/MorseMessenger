@@ -17,6 +17,7 @@ const Layout: FC<Props> = ({ children }) => {
       <Header />
       <main className="relative flex container grow">
         {isUserLoading ? <FullPageSpinner /> : children}
+        <div id="modals" className="absolute top-0 left-0 h-full"></div>
         <div
           id="info-popup"
           className="absolute right-2 bottom-2 overflow-hidden"

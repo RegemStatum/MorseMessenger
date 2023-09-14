@@ -1,3 +1,4 @@
+import { useUserContext } from "@/app/_context/UserContext";
 import Image from "next/image";
 import { FC } from "react";
 
@@ -5,25 +6,19 @@ type Props = {
   id: number;
   name: string;
   src: string;
-  chosenImageId: number;
-  setNewChosenImage: (id: number) => void;
 };
 
-const UserProvidedImage: FC<Props> = ({
-  id,
-  name,
-  src,
-  chosenImageId,
-  setNewChosenImage,
-}) => {
+const UserProvidedImage: FC<Props> = ({ id, name, src }) => {
+  const { chosenImageId, setChosenImage } = useUserContext();
+
   const handleClick = () => {
-    setNewChosenImage(id);
+    setChosenImage(id);
   };
 
   return (
     <div
       className={`${
-        id === chosenImageId ? "border-gray-900" : "border-gray-200"
+        id === chosenImageId ? "border-gray-700" : "border-gray-200"
       } border-2 relative w-16 h-16 rounded-md overflow-hidden object-cover`}
       onClick={handleClick}
     >
@@ -35,6 +30,7 @@ const UserProvidedImage: FC<Props> = ({
         placeholder="blur"
         className="object-cover"
         quality={100}
+        sizes="10vw"
       />
     </div>
   );
