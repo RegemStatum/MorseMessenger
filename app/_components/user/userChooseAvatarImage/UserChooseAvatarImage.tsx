@@ -4,9 +4,6 @@ import UserProvidedImages from "./UserProvidedAvatarImages";
 import { PrimaryButton, LoadingButton } from "../../ui/buttons";
 import { useAppContext } from "@/app/_context/AppContext";
 import { getAuth, updateProfile } from "firebase/auth";
-import { firebase_storage } from "@/app/_firebase/config";
-import { getDownloadURL, ref } from "firebase/storage";
-import { USER_DEFAULT_IMAGES } from "@/app/_lib/constants/constants";
 import { useAuthContext } from "@/app/_context/AuthContext";
 import UserAddNewImageButton from "./UserAddNewAvatarImageButton";
 import { createPortal } from "react-dom";
@@ -16,7 +13,7 @@ import { useUserContext } from "@/app/_context/UserContext";
 const UserChooseAvatarImage: FC = () => {
   const { showInfoPopup } = useAppContext();
   const { updateLocalUser } = useAuthContext();
-  const { chosenImageId, isUploadImageModalOpen } = useUserContext();
+  const { chosenImage, isUploadImageModalOpen } = useUserContext();
   const [isLoading, setIsLoading] = useState(false);
   const [isDOMReady, setIsDOMReady] = useState(false);
 
@@ -24,24 +21,11 @@ const UserChooseAvatarImage: FC = () => {
     setIsDOMReady(true);
   }, []);
 
-  const getImageDownloadURL = async () => {
-    const imageName = USER_DEFAULT_IMAGES.find(
-      (image) => image.id === chosenImageId
-    )?.name;
-    if (!imageName) throw new Error("No requested image name");
-    const imageStorageRef = ref(
-      firebase_storage,
-      `providedAvatarImages/${imageName}`
-    );
-    const imageDownloadURL = await getDownloadURL(imageStorageRef);
-    return imageDownloadURL;
-  };
-
   const updateUserImage = async () => {
     try {
       setIsLoading(true);
 
-      const imageDownloadURL = await getImageDownloadURL();
+      const imageDownloadURL = chosenImage.url;
       const auth = getAuth();
       const currentUser = auth.currentUser;
       if (!currentUser) throw new Error("No current user");

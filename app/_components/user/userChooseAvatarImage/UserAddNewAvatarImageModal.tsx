@@ -16,6 +16,7 @@ const maxImageSizeMB = 5;
 const UserAddNewAvatarImageModal: FC = () => {
   const { showInfoPopup } = useAppContext();
   const { user } = useAuthContext();
+  const { updateUserUploadedAvatarImages } = useUserContext();
   const { closeUploadImageModal } = useUserContext();
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -50,10 +51,11 @@ const UserAddNewAvatarImageModal: FC = () => {
         `userImages/${userID}/avatarImages/${imageName}`
       );
       await uploadBytes(imageStorageRef, imageFile);
+      await updateUserUploadedAvatarImages();
 
       showInfoPopup("Image uploaded", "success");
-      setIsLoading(false);
       closeUploadImageModal();
+      setIsLoading(false);
     } catch (error: any) {
       console.error(error);
       showInfoPopup(

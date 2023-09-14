@@ -3,23 +3,23 @@ import Image from "next/image";
 import { FC } from "react";
 
 type Props = {
-  id: number;
+  id: number | string;
   name: string;
   src: string;
 };
 
 const UserProvidedAvatarImage: FC<Props> = ({ id, name, src }) => {
-  const { chosenImageId, setChosenImage } = useUserContext();
+  const { chosenImage, setChosenImage } = useUserContext();
 
   const handleClick = () => {
-    setChosenImage(id);
+    setChosenImage({ id, url: src });
   };
 
   return (
     <div
       className={`${
-        id === chosenImageId ? "border-gray-700" : "border-gray-200"
-      } border-2 relative w-16 h-16 rounded-md overflow-hidden object-cover`}
+        id === chosenImage.id ? "border-gray-700" : "border-gray-200"
+      } border-2 relative w-16 h-16 rounded-md overflow-hidden object-cover cursor-pointer`}
       onClick={handleClick}
     >
       <Image
