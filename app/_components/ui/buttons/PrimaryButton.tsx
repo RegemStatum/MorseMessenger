@@ -8,7 +8,7 @@ const PrimaryButton: FC<Props> = ({ children, ...rest }) => {
   return (
     <button
       {...rest}
-      className="block w-full p-1 leading-8 bg-gray-900 text-gray-50 rounded-md border disabled:bg-gray-200 disabled:border-gray-200 lg:p-2"
+      className="block w-full p-2 font-medium bg-gray-700 text-gray-50 rounded-md disabled:bg-gray-200 disabled:border-gray-200"
     >
       {children}
     </button>

@@ -3,8 +3,11 @@ import Input from "../ui/forms/Input";
 import { PrimaryButton } from "../ui/buttons";
 import signUp from "@/app/_firebase/auth/signup";
 import signIn from "@/app/_firebase/auth/signin";
-import Spinner from "../ui/loaders/Spinner";
 import { useAppContext } from "@/app/_context/AppContext";
+import LoadingButton from "../ui/buttons/LoadingButton";
+import localValidatePassword from "@/app/_lib/helpers/localValidatePassword";
+import localValidateEmail from "@/app/_lib/helpers/localValidateEmail";
+import { useRouter } from "next/navigation";
 
 type Props = {
   formActionText: string;
@@ -12,6 +15,7 @@ type Props = {
 };
 
 const AuthForm: FC<Props> = ({ formActionText, action }) => {
+  const router = useRouter();
   const { showInfoPopup } = useAppContext();
   const [isLoading, setIsLoading] = useState(false);
   const [isPasswordShown, setIsPasswordShown] = useState(false);
@@ -29,24 +33,15 @@ const AuthForm: FC<Props> = ({ formActionText, action }) => {
   };
 
   const validateForm = () => {
-    const validation = { isValid: true, message: "" };
+    let validation = { isValid: true, message: "" };
     const { email, password } = formData;
-    if (!email || email === "" || email.trim() === "" || !email.includes("@")) {
-      validation.isValid = false;
-      validation.message = "Email is not valid";
-      return validation;
-    }
-    if (
-      !password ||
-      password === "" ||
-      password.trim() === "" ||
-      password.length < 6 ||
-      password.length > 18
-    ) {
-      validation.isValid = false;
-      validation.message = "Password is not valid";
-      return validation;
-    }
+    // validate email
+    validation = localValidateEmail(email);
+    if (!validation.isValid) return validation;
+    // validate password
+    validation = localValidatePassword(password);
+    if (!validation.isValid) return validation;
+
     return validation;
   };
 
@@ -72,6 +67,7 @@ const AuthForm: FC<Props> = ({ formActionText, action }) => {
       }
       // success
       console.log(result);
+      router.push("/user");
       setIsLoading(false);
     } catch (e: any) {
       console.log(e);
@@ -79,21 +75,6 @@ const AuthForm: FC<Props> = ({ formActionText, action }) => {
       setIsLoading(false);
     }
   };
-
-  const LoadingButton = (
-    <PrimaryButton disabled>
-      <div className="flex justify-center items-center gap-1">
-        <div className="w-[25px] h-[25px] text-gray-600">
-          <Spinner />
-        </div>
-        <p className="text-gray-600 font-bold">Loading...</p>
-      </div>
-    </PrimaryButton>
-  );
-
-  const SubmitButton = (
-    <PrimaryButton onClick={handleFormSubmit}>{formActionText}</PrimaryButton>
-  );
 
   return (
     <form className="space-y-1">
@@ -123,7 +104,13 @@ const AuthForm: FC<Props> = ({ formActionText, action }) => {
         functionalIconOnClickHandler={toggleIsPasswordShown}
         hintText="Password length must be from 8 to 16 characters"
       />
-      {isLoading ? LoadingButton : SubmitButton}
+      {isLoading ? (
+        <LoadingButton />
+      ) : (
+        <PrimaryButton onClick={handleFormSubmit}>
+          {formActionText}
+        </PrimaryButton>
+      )}
     </form>
   );
 };

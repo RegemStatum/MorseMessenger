@@ -2,7 +2,7 @@
 import { FC, createContext, useContext, useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import InfoPopup from "../_components/ui/modals/InfoPopup";
-import { HIDE_INFOPOPUP_AFTER_DEFAULT_MS } from "../_lib/constants";
+import { HIDE_INFOPOPUP_AFTER_DEFAULT_MS } from "../_lib/constants/constants";
 import {
   AppContextValue,
   InfoPopupType,

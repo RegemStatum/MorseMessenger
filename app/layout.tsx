@@ -3,8 +3,7 @@ import type { Metadata } from "next";
 import { Inter, Roboto_Flex } from "next/font/google";
 import { FC } from "react";
 import Layout from "./_components/layout";
-import { AuthContextProvider } from "./_context";
-import AppContextProvider from "./_context/AppContext";
+import { AuthContextProvider, AppContextProvider } from "./_context";
 
 const inter = Inter({
   subsets: ["latin"],

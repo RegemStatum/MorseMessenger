@@ -4,18 +4,32 @@ import FullPageSpinner from "@/app/_components/ui/loaders/FullPageSpinner";
 import { useAuthContext } from "@/app/_context/AuthContext";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { useEffect } from "react";
+import { FC, useEffect } from "react";
 
-const SignInPage = () => {
+type Props = {
+  searchParams: {
+    [key: string]: string | string[] | undefined;
+  };
+};
+
+const SignInPage: FC<Props> = ({ searchParams }) => {
   const router = useRouter();
   const { user, isUserLoading } = useAuthContext();
-  // redirect to user page if user already authenticated
-  useEffect(() => {
-    if ((user && !isUserLoading) || localStorage.getItem("user"))
-      router.push("/user");
-  }, [router, user, isUserLoading]);
+  const isReauthentication = searchParams?.reauthenticate === "true";
 
-  if (user || isUserLoading || localStorage.getItem("user"))
+  // redirect to user page if user already authenticated and not trying to reauthenticate
+  useEffect(() => {
+    if (
+      ((user && !isUserLoading) || localStorage.getItem("user")) &&
+      !isReauthentication
+    )
+      router.push("/user");
+  }, [router, user, isUserLoading, isReauthentication]);
+
+  if (
+    (user || isUserLoading || localStorage.getItem("user")) &&
+    !isReauthentication
+  )
     return <FullPageSpinner />;
 
   return (
@@ -29,7 +43,10 @@ const SignInPage = () => {
           className="mx-auto h-[211px] lg:h-[380px]"
         />
       </div>
-      <AuthFormContainer action="signin" />
+      <AuthFormContainer
+        action="signin"
+        isReauthentication={isReauthentication}
+      />
     </div>
   );
 };

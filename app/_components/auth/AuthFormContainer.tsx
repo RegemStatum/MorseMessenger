@@ -5,9 +5,10 @@ import AuthForm from "./AuthForm";
 
 type Props = {
   action: "signin" | "signup";
+  isReauthentication?: boolean;
 };
 
-const AuthFormContainer: FC<Props> = ({ action }) => {
+const AuthFormContainer: FC<Props> = ({ action, isReauthentication }) => {
   const formActionText = action === "signup" ? "Sign up" : "Sign in";
   const authLinkText =
     action === "signup"
@@ -22,12 +23,19 @@ const AuthFormContainer: FC<Props> = ({ action }) => {
           {formActionText}
         </h1>
         <p className="pl-1 text-sm leading-tight text-gray-500 text-center lg:text-base">
-          Please, {formActionText.toLowerCase()} to start using Morse messenger
+          {isReauthentication
+            ? "Please, sign in again"
+            : `Please, ${formActionText.toLowerCase()} to start using Morse messenger`}
         </p>
       </div>
       <AuthForm action={action} formActionText={formActionText} />
-      <div className="mt-3 ml-1 text-sm">
-        <PrimaryLink href={authLinkHref}>{authLinkText}</PrimaryLink>
+      <div className="mt-2 ml-1 text-sm">
+        {!isReauthentication && (
+          <PrimaryLink href={authLinkHref}>{authLinkText}</PrimaryLink>
+        )}
+        <PrimaryLink href="/auth/resetPassword">
+          I forgot my password
+        </PrimaryLink>
       </div>
     </div>
   );
