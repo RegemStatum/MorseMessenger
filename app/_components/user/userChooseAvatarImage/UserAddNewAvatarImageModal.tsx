@@ -13,7 +13,7 @@ import { useAuthContext } from "@/app/_context/AuthContext";
 const xMarkIconSize = 24;
 const maxImageSizeMB = 5;
 
-const UserAddNewImageModal: FC = () => {
+const UserAddNewAvatarImageModal: FC = () => {
   const { showInfoPopup } = useAppContext();
   const { user } = useAuthContext();
   const { closeUploadImageModal } = useUserContext();
@@ -104,4 +104,4 @@ const UserAddNewImageModal: FC = () => {
   );
 };
 
-export default UserAddNewImageModal;
+export default UserAddNewAvatarImageModal;

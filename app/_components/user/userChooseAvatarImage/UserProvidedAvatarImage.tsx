@@ -8,7 +8,7 @@ type Props = {
   src: string;
 };
 
-const UserProvidedImage: FC<Props> = ({ id, name, src }) => {
+const UserProvidedAvatarImage: FC<Props> = ({ id, name, src }) => {
   const { chosenImageId, setChosenImage } = useUserContext();
 
   const handleClick = () => {
@@ -36,4 +36,4 @@ const UserProvidedImage: FC<Props> = ({ id, name, src }) => {
   );
 };
 
-export default UserProvidedImage;
+export default UserProvidedAvatarImage;

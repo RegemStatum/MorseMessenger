@@ -4,7 +4,7 @@ import { useUserContext } from "@/app/_context/UserContext";
 
 const plusIconSize = 24;
 
-const UserAddNewImageButton: FC = () => {
+const UserAddNewAvatarImageButton: FC = () => {
   const { openUploadImageModal } = useUserContext();
 
   return (
@@ -23,4 +23,4 @@ const UserAddNewImageButton: FC = () => {
   );
 };
 
-export default UserAddNewImageButton;
+export default UserAddNewAvatarImageButton;

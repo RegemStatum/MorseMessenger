@@ -1,6 +1,6 @@
 import { FC, useEffect, useState } from "react";
 import UserSectionContainer from "../UserSectionContainer";
-import UserProvidedImages from "./UserProvidedImages";
+import UserProvidedImages from "./UserProvidedAvatarImages";
 import { PrimaryButton, LoadingButton } from "../../ui/buttons";
 import { useAppContext } from "@/app/_context/AppContext";
 import { getAuth, updateProfile } from "firebase/auth";
@@ -8,12 +8,12 @@ import { firebase_storage } from "@/app/_firebase/config";
 import { getDownloadURL, ref } from "firebase/storage";
 import { USER_DEFAULT_IMAGES } from "@/app/_lib/constants/constants";
 import { useAuthContext } from "@/app/_context/AuthContext";
-import UserAddNewImageButton from "./UserAddNewImageButton";
+import UserAddNewImageButton from "./UserAddNewAvatarImageButton";
 import { createPortal } from "react-dom";
-import UserAddNewImageModal from "./UserAddNewImageModal";
+import UserAddNewImageModal from "./UserAddNewAvatarImageModal";
 import { useUserContext } from "@/app/_context/UserContext";
 
-const UserChooseUserImage: FC = () => {
+const UserChooseAvatarImage: FC = () => {
   const { showInfoPopup } = useAppContext();
   const { updateLocalUser } = useAuthContext();
   const { chosenImageId, isUploadImageModalOpen } = useUserContext();
@@ -84,4 +84,4 @@ const UserChooseUserImage: FC = () => {
   );
 };
 
-export default UserChooseUserImage;
+export default UserChooseAvatarImage;
