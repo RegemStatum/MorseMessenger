@@ -47,7 +47,7 @@ const UserAddNewImageModal: FC = () => {
       const imageName = `${imageFile?.name}date=${Date.now()}`;
       const imageStorageRef = ref(
         firebase_storage,
-        `userPhotos/${userID}/${imageName}`
+        `userImages/${userID}/avatarImages/${imageName}`
       );
       await uploadBytes(imageStorageRef, imageFile);
 

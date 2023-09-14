@@ -29,7 +29,10 @@ const UserChooseUserImage: FC = () => {
       (image) => image.id === chosenImageId
     )?.name;
     if (!imageName) throw new Error("No requested image name");
-    const imageStorageRef = ref(firebase_storage, `userPhotos/${imageName}`);
+    const imageStorageRef = ref(
+      firebase_storage,
+      `providedAvatarImages/${imageName}`
+    );
     const imageDownloadURL = await getDownloadURL(imageStorageRef);
     return imageDownloadURL;
   };

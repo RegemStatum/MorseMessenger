@@ -42,7 +42,6 @@ const AuthContextProvider: FC<Props> = ({ children }) => {
   const updateLocalUser = () => {
     const auth = getAuth();
     const currentUser = auth.currentUser;
-    console.log("Current user photo url: ", currentUser?.photoURL);
     if (!currentUser) throw new Error("No current user");
     setUser({ ...currentUser });
     setLocalStorageUser({ ...currentUser });
