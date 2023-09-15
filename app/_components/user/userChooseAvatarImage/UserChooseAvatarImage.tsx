@@ -53,7 +53,11 @@ const UserChooseAvatarImage: FC = () => {
   };
 
   return (
-    <UserSectionContainer headerText="Choose an image">
+    <UserSectionContainer
+      headerText="Choose profile photo"
+      isMinimize={true}
+      maxHeight="max-h-[230px]"
+    >
       <div className="mb-1 flex gap-1 flex-wrap">
         <UserProvidedImages />
         <UserAddNewImageButton />
