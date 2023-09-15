@@ -67,7 +67,7 @@ const UserAddNewAvatarImageModal: FC = () => {
   };
 
   return (
-    <div className="absolute z-10 w-full h-full flex justify-center items-center bg-gray-200">
+    <div className="absolute z-50 w-full h-full flex justify-center items-center bg-gray-200">
       <div className="rounded-md p-3 bg-gray-100 shadow-xl">
         <div className="mb-3 flex justify-between items-center">
           <h2 className="text-xl">Upload your image</h2>

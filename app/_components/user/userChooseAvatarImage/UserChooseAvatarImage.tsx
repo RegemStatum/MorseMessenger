@@ -13,8 +13,13 @@ import { useUserContext } from "@/app/_context/UserContext";
 const UserChooseAvatarImage: FC = () => {
   const { showInfoPopup } = useAppContext();
   const { updateLocalUser } = useAuthContext();
-  const { chosenImage, isUploadImageModalOpen } = useUserContext();
-  const [isLoading, setIsLoading] = useState(false);
+  const {
+    chosenImage,
+    isUploadImageModalOpen,
+    isUserImageUpdating,
+    startUpdatingUserImage,
+    endUpdatingUserImage,
+  } = useUserContext();
   const [isDOMReady, setIsDOMReady] = useState(false);
 
   useEffect(() => {
@@ -23,7 +28,7 @@ const UserChooseAvatarImage: FC = () => {
 
   const updateUserImage = async () => {
     try {
-      setIsLoading(true);
+      startUpdatingUserImage();
 
       const imageDownloadURL = chosenImage.url;
       const auth = getAuth();
@@ -36,14 +41,14 @@ const UserChooseAvatarImage: FC = () => {
       updateLocalUser();
 
       showInfoPopup("User image updated", "success");
-      setIsLoading(false);
+      endUpdatingUserImage();
     } catch (error: any) {
       console.error(error);
       showInfoPopup(
         error.message || "Something went wrong, try again later",
         "error"
       );
-      setIsLoading(false);
+      endUpdatingUserImage();
     }
   };
 
@@ -59,7 +64,7 @@ const UserChooseAvatarImage: FC = () => {
             document.getElementById("modals")!
           )}
       </div>
-      {isLoading ? (
+      {isUserImageUpdating ? (
         <LoadingButton />
       ) : (
         <PrimaryButton onClick={updateUserImage}>Update avatar</PrimaryButton>

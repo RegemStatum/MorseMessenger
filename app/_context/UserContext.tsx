@@ -10,7 +10,9 @@ import {
 import { USER_DEFAULT_IMAGES } from "../_lib/constants/constants";
 import { useAuthContext } from "./AuthContext";
 import { firebase_storage } from "../_firebase/config";
-import { getDownloadURL, listAll, ref } from "firebase/storage";
+import { deleteObject, getDownloadURL, listAll, ref } from "firebase/storage";
+import { getAuth, updateProfile } from "firebase/auth";
+import { useAppContext } from "./AppContext";
 
 type ChosenImage = {
   id: number | string;
@@ -23,10 +25,14 @@ type UserContextValue = {
   chosenImage: ChosenImage;
   isUploadImageModalOpen: boolean;
   userUploadedAvatars: AvatarImage[];
+  isUserImageUpdating: boolean;
   setChosenImage: (image: ChosenImage) => void;
   openUploadImageModal: () => void;
   closeUploadImageModal: () => void;
   updateUserUploadedAvatarImages: () => Promise<void>;
+  deleteUserAvatarImage: (id: string, src: string) => Promise<void>;
+  startUpdatingUserImage: () => void;
+  endUpdatingUserImage: () => void;
 };
 
 const defaultUserContextValue: UserContextValue = {
@@ -36,10 +42,14 @@ const defaultUserContextValue: UserContextValue = {
   },
   isUploadImageModalOpen: false,
   userUploadedAvatars: [],
+  isUserImageUpdating: false,
   setChosenImage: (image) => {},
   openUploadImageModal: () => {},
   closeUploadImageModal: () => {},
   updateUserUploadedAvatarImages: async () => {},
+  deleteUserAvatarImage: async (id, src) => {},
+  startUpdatingUserImage: () => {},
+  endUpdatingUserImage: () => {},
 };
 
 const UserContext = createContext(defaultUserContextValue);
@@ -49,7 +59,8 @@ type Props = {
 };
 
 const UserContextProvider: FC<Props> = ({ children }) => {
-  const { user } = useAuthContext();
+  const { showInfoPopup } = useAppContext();
+  const { user, updateLocalUser } = useAuthContext();
   const [chosenImage, setChosenImage] = useState({
     ...defaultUserContextValue.chosenImage,
   });
@@ -59,6 +70,7 @@ const UserContextProvider: FC<Props> = ({ children }) => {
   const [userUploadedAvatars, setUserUploadedAvatars] = useState<AvatarImage[]>(
     []
   );
+  const [isUserImageUpdating, setIsUserImageUpdating] = useState(false);
 
   const getUserUploadedAvatarImagesList = useCallback(async () => {
     const userId = user?.uid;
@@ -101,6 +113,49 @@ const UserContextProvider: FC<Props> = ({ children }) => {
     setUserUploadedAvatars(newUserUploadedAvatars);
   }, [getUserUploadedAvatarImagesURL]);
 
+  const deleteUserAvatarImage = async (id: string, src: string) => {
+    try {
+      startUpdatingUserImage();
+
+      const userId = user?.uid;
+      const URLImageName = id.split("?alt=")[0];
+      const imageName = URLImageName.replace("%3D", "=");
+      const storageImageRef = ref(
+        firebase_storage,
+        `userImages/${userId}/avatarImages/${imageName}`
+      );
+      await deleteObject(storageImageRef);
+
+      // set user photo URL to empty string if image to delete is user avatar image
+      if (src === user?.photoURL) {
+        const auth = getAuth();
+        const currentUser = auth.currentUser;
+        if (!currentUser) throw new Error("No current user");
+        await updateProfile(auth.currentUser, { photoURL: "" });
+        updateLocalUser();
+      }
+
+      updateUserUploadedAvatarImages();
+      showInfoPopup("Image has been deleted", "success");
+      endUpdatingUserImage();
+    } catch (error: any) {
+      console.error(error);
+      showInfoPopup(
+        error.message || "Something went wrong. Try again later",
+        "error"
+      );
+      endUpdatingUserImage();
+    }
+  };
+
+  const startUpdatingUserImage = () => {
+    setIsUserImageUpdating(true);
+  };
+
+  const endUpdatingUserImage = () => {
+    setIsUserImageUpdating(false);
+  };
+
   const openUploadImageModal = () => {
     setIsUploadImageModalOpen(true);
   };
@@ -119,10 +174,14 @@ const UserContextProvider: FC<Props> = ({ children }) => {
         chosenImage,
         isUploadImageModalOpen,
         userUploadedAvatars,
+        isUserImageUpdating,
         setChosenImage,
         openUploadImageModal,
         closeUploadImageModal,
         updateUserUploadedAvatarImages,
+        deleteUserAvatarImage,
+        startUpdatingUserImage,
+        endUpdatingUserImage,
       }}
     >
       {children}
