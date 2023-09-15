@@ -5,7 +5,7 @@ import UserSectionContainer from "../UserSectionContainer";
 const UserUpdateNickname: FC = () => {
   return (
     <UserSectionContainer
-      headerText="Update nickname"
+      headerText="Change nickname"
       isMinimize={true}
       maxHeight="max-h-[95px]"
     >

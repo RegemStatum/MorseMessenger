@@ -7,6 +7,7 @@ type Props = {
   headerText?: string;
   isClosable?: boolean;
   isMinimize?: boolean;
+  isDefaultMinimized?: boolean;
   maxHeight?: string;
 };
 
@@ -17,12 +18,13 @@ const UserSectionContainer: FC<Props> = ({
   headerText,
   isClosable = false,
   isMinimize = false,
+  isDefaultMinimized = true,
   maxHeight,
 }) => {
   // used if able to close section
   const [isOpened, setIsOpened] = useState(true);
   // used if able to hide section
-  const [isHidden, setIsHidden] = useState(false);
+  const [isHidden, setIsHidden] = useState(isDefaultMinimized);
 
   const closeSection = () => {
     setIsOpened(false);
@@ -83,7 +85,7 @@ const UserSectionContainer: FC<Props> = ({
       )}
       <div
         className={`transition-[max-height] duration-200 ${
-          isHidden ? "max-h-0 overflow-hidden" : maxHeight
+          isMinimize && isHidden ? "max-h-0 overflow-hidden" : maxHeight
         }`}
       >
         <div className={`${headerText ? "pt-1" : ""}`}>{children}</div>

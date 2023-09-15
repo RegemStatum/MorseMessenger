@@ -85,7 +85,11 @@ const UserChangePassword: FC<Props> = ({}) => {
   };
 
   return (
-    <UserSectionContainer headerText="Change password" isClosable={false}>
+    <UserSectionContainer
+      headerText="Change password"
+      isMinimize={true}
+      maxHeight="max-h-[225px]"
+    >
       <form className="flex flex-col gap-1">
         <Input
           name="newPassword"
