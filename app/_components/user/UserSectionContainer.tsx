@@ -86,7 +86,7 @@ const UserSectionContainer: FC<Props> = ({
           isHidden ? "max-h-0 overflow-hidden" : maxHeight
         }`}
       >
-        <div className="pt-1">{children}</div>
+        <div className={`${headerText ? "pt-1" : ""}`}>{children}</div>
       </div>
     </div>
   );
