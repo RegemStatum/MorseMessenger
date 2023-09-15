@@ -1,14 +1,13 @@
 import { FC, useState } from "react";
 import Input from "../../ui/forms/Input";
-import { PrimaryButton } from "../../ui/buttons";
+import { MiniLoadingButton, PrimaryButton } from "../../ui/buttons";
 import { useAppContext } from "@/app/_context/AppContext";
-import LoadingButton from "../../ui/buttons/LoadingButton";
 import { getAuth, updateProfile } from "firebase/auth";
+import { useAuthContext } from "@/app/_context/AuthContext";
 
-type Props = {};
-
-const UserCreateNicknameForm: FC<Props> = ({}) => {
+const UserUpdateNicknameForm: FC = () => {
   const { showInfoPopup } = useAppContext();
+  const { updateLocalUser } = useAuthContext();
   const [nickname, setNickname] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
@@ -24,6 +23,8 @@ const UserCreateNicknameForm: FC<Props> = ({}) => {
     await updateProfile(currentUser, {
       displayName: newDisplayName,
     });
+    updateLocalUser();
+    setNickname("");
   };
 
   const handleFormSubmit = async (e: React.SyntheticEvent) => {
@@ -33,7 +34,7 @@ const UserCreateNicknameForm: FC<Props> = ({}) => {
 
       await updateUserDisplayName(nickname);
 
-      showInfoPopup("Nickname created", "info");
+      showInfoPopup("Nickname has been updated", "success");
       setIsLoading(false);
     } catch (error: any) {
       console.log(error);
@@ -58,7 +59,7 @@ const UserCreateNicknameForm: FC<Props> = ({}) => {
       </div>
       <div className="w-[79px]">
         {isLoading ? (
-          <LoadingButton />
+          <MiniLoadingButton />
         ) : (
           <PrimaryButton onClick={handleFormSubmit}>Confirm</PrimaryButton>
         )}
@@ -67,4 +68,4 @@ const UserCreateNicknameForm: FC<Props> = ({}) => {
   );
 };
 
-export default UserCreateNicknameForm;
+export default UserUpdateNicknameForm;

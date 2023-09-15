@@ -1,7 +1,7 @@
 "use client";
 import { FC } from "react";
 import { useAuthContext } from "@/app/_context/AuthContext";
-import UserCreateNickname from "./userCreateNickname/UserCreateNickname";
+import UserCreateNickname from "./userUpdateNickname/UserUpdateNickname";
 import UserInfo from "./userInfo/UserInfo";
 import UserChangePassword from "./UserChangePassword";
 import UserLogOut from "./UserLogOut";
@@ -14,7 +14,7 @@ const User: FC = () => {
     <div className="flex flex-col gap-2 grow pt-3">
       <UserInfo />
       <UserChooseAvatarImage />
-      {!user?.displayName && <UserCreateNickname />}
+      <UserCreateNickname />
       <UserChangePassword />
       <UserLogOut />
     </div>
